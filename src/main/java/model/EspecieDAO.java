@@ -91,7 +91,7 @@ public class EspecieDAO extends DAO{
     }
 
     public List retriveAllAnimalWithEspecie(int id) {
-        return this.retrieve("Select a.id from especies as e join animais as a on a.id_especie = e.id where e.id = " + id);
+        return this.retrieve("Select a.id, e.nome_especie as nome_especie from especies as e join animais as a on a.id_especie = e.id where e.id = " + id);
     }
         
     // Updade

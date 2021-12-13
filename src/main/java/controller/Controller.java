@@ -255,10 +255,6 @@ public class Controller {
         return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 
-    private static Date localDateTimeToDate(LocalDateTime localDateTime) {
-        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-    }
-
     public static void filtrarConsultas(JTable table, String sintomas, String esp,
             boolean todas, boolean hoje, boolean cliente, boolean animal,
             boolean vet) {
@@ -269,7 +265,7 @@ public class Controller {
                 Date now = Calendar.getInstance().getTime();
                 LocalDateTime localDateTime = dateToLocalDateTime(now);
                 String startOfDay = localDateTime.with(LocalTime.MIN).toString();
-                where += " AND (strftime('%s', data) BETWEEN strftime('%s', '"+startOfDay+"') AND strftime('%s', date('"+startOfDay+"', '+1 day'))) ";
+                where += " AND (strftime('%s', data) BETWEEN strftime('%s', '" + startOfDay + "') AND strftime('%s', date('" + startOfDay + "', '+1 day'))) ";
             }
 
             if (cliente && clienteSelecionado != null) {
@@ -283,7 +279,6 @@ public class Controller {
             if (vet && vetSelecionado != null) {
                 where += " AND id_vet = '" + vetSelecionado.getId() + "' ";
             }
-            System.out.println(where);
             String orderBy = " ORDER BY data, hora ";
             ((ConsultaTableModel) table.getModel())
                     .addListOfItems(ConsultaDAO
