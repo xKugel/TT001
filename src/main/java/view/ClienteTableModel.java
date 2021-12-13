@@ -5,8 +5,9 @@
  */
 package view;
 
-import com.topicos.tt001.Cliente.Cliente;
+import model.Cliente;
 import java.util.List;
+import model.ClienteDAO;
 
 /**
  *
@@ -69,6 +70,7 @@ public class ClienteTableModel extends GenericTableModel {
             default:
                 throw new IndexOutOfBoundsException("Não existe coluna para este index");
         }  
+        ClienteDAO.getInstance().update(cliente);
     }
 
     @Override

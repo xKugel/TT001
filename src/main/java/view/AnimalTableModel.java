@@ -5,11 +5,12 @@
  */
 package view;
 
-import com.topicos.tt001.Animal.Animal;
-import com.topicos.tt001.Cliente.Cliente;
-import com.topicos.tt001.Especie.EspecieDAO;
-import com.topicos.tt001.Veterinario.VeterinarioDAO;
+import model.Animal;
+import model.EspecieDAO;
+import model.VeterinarioDAO;
 import java.util.List;
+import model.AnimalDAO;
+import model.Especie;
 
 /**
  *
@@ -74,14 +75,31 @@ VeterinarioDAO.getInstance().retrieveAll().stream().forEach(e -> {
                 animal.setIdade((Integer)aValue);
                 break;
             case 3:
-                animal.setIdEspecie((Integer)aValue);
+                String nomeEspecie = (String)aValue;
+                List<Especie> retrieveBySimilarName = 
+                    EspecieDAO.getInstance().retrieveBySimilarName(nomeEspecie);
+                Especie especie = retrieveBySimilarName == null 
+                        || retrieveBySimilarName.isEmpty() 
+                        ? null :
+                        retrieveBySimilarName.get(0);
+                animal.setIdEspecie((
+                        especie != null 
+                                ? especie 
+                                : EspecieDAO.getInstance().create(nomeEspecie))
+                        .getId());
+                break;
             default:
                 throw new IndexOutOfBoundsException("Não existe coluna para este index");
         }  
+        AnimalDAO.getInstance().update(animal);
     }
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return true;
     }
+
+    
+    
+    
 }

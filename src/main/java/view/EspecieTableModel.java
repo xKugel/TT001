@@ -5,8 +5,8 @@
  */
 package view;
 
-import com.topicos.tt001.Especie.Especie;
-import com.topicos.tt001.Especie.EspecieDAO;
+import model.Especie;
+import model.EspecieDAO;
 import java.util.List;
 
 /**

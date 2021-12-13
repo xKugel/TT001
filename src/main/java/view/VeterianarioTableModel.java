@@ -5,8 +5,9 @@
  */
 package view;
 
-import com.topicos.tt001.Veterinario.Veterinario;
+import model.Veterinario;
 import java.util.List;
+import model.VeterinarioDAO;
 
 /**
  *
@@ -64,10 +65,11 @@ public class VeterianarioTableModel extends GenericTableModel {
             default:
                 throw new IndexOutOfBoundsException("Não existe coluna para este index");
         }  
+        VeterinarioDAO.getInstance().update(veterinario);
     }
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return false;
+        return true;
     }
 }
